@@ -6,10 +6,9 @@ import "time"
 var balance float64
 
 func main() {
-	
-	
+
 	balance = 500
-    var input float64
+	var input float64
 	for {
 		fmt.Println("What would you like to do?")
 		fmt.Println("1. Check balance.")
@@ -18,26 +17,25 @@ func main() {
 		fmt.Println("4. Exit")
 		fmt.Scan(&input)
 
-		if input == 1 {
+		switch input {
+		case 1:
 			checkBalance()
-		} else if input == 2 {
+		case 2:
 			depositMoney()
-
-		} else if input == 3 {
+		case 3:
 			withdrawMoney()
+		case 4:
+			fmt.Println("Exiting the program. Have a nice day!")
+			return
+		default:
+			fmt.Println("Invalid input. Please enter a number between 1 - 4.")
 
-		} else if input == 4 {
-			break
-		} else {
-			fmt.Println("Input value is invalid. Please enter a number between 1 - 4")
-			continue
 		}
 
 	}
 }
 
-
-func checkBalance () {
+func checkBalance() {
 	fmt.Printf("Current Balance Is: %.2f", balance)
 }
 
@@ -45,7 +43,7 @@ func depositMoney() {
 	fmt.Println("Enter the value you want to deposit: ")
 	var deposit float64
 	fmt.Scan(&deposit)
-	
+
 	if deposit <= 0 {
 		fmt.Println("Invalid amount. Please enter a positive number.")
 	} else {
@@ -66,6 +64,6 @@ func withdrawMoney() {
 	} else {
 		balance -= withdrawAmount
 		fmt.Printf("Withdrawal successful! New balance: %.2f\n", balance)
-		time.Sleep(2 * time.Second) 
+		time.Sleep(2 * time.Second)
 	}
 }
