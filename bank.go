@@ -7,22 +7,16 @@ var balance float64
 
 func main() {
 	
-	formattedQuestion1 := fmt.Sprintf("What would you like to do? \n")
-	formattedQuestion2 := fmt.Sprintf("1. Check balance. \n")
-	formattedQuestion3 := fmt.Sprintf("2. Deposit money \n")
-	formattedQuestion4 := fmt.Sprintf("3. Withdraw money \n")
-	formattedQuestion5 := fmt.Sprintf("4. Exit \n")
+	
 	balance = 500
-
-    var input
+    var input float64
 	for {
-		fmt.Print(formattedQuestion1, formattedQuestion2, formattedQuestion3, formattedQuestion4, formattedQuestion5)
+		fmt.Println("What would you like to do?")
+		fmt.Println("1. Check balance.")
+		fmt.Println("2. Deposit money")
+		fmt.Println("3. Withdraw money")
+		fmt.Println("4. Exit")
 		fmt.Scan(&input)
-		validInputCheck := checkInputValidity(input)
-		if validInputCheck < -1 {
-			fmt.Print("Input value is invalid")
-			continue
-		}
 
 		if input == 1 {
 			checkBalance()
@@ -30,42 +24,48 @@ func main() {
 			depositMoney()
 
 		} else if input == 3 {
+			withdrawMoney()
 
 		} else if input == 4 {
 			break
 		} else {
-			fmt.Print("Input value is invalid")
+			fmt.Println("Input value is invalid. Please enter a number between 1 - 4")
 			continue
 		}
 
-
-		
-
 	}
 }
 
-func checkInputValidity(input) int {
-	if input < 0 {
-		return -1
-	} else {
-		return 1
-	}
-}
 
 func checkBalance () {
-	fmt.Printf("Balance: %v", balance)
+	fmt.Printf("Current Balance Is: %.2f", balance)
 }
+
 func depositMoney() {
 	fmt.Println("Enter the value you want to deposit: ")
-	var deposit
+	var deposit float64
 	fmt.Scan(&deposit)
-	validInputCheck := checkInputValidity(deposit)
-	if validInputCheck < -1 {
-		fmt.Println("Input value is invalid")
+	
+	if deposit <= 0 {
+		fmt.Println("Invalid amount. Please enter a positive number.")
 	} else {
 		balance += deposit
-		fmt.Printf("Current balance is: %")
-		time.Sleep(8 * time.Second)
+		fmt.Printf("Deposit successful. New balance is: %.2f\n", balance)
+		time.Sleep(5 * time.Second)
 
+	}
+}
+func withdrawMoney() {
+	fmt.Println("Enter the value you want to withdraw: ")
+	var withdrawAmount float64
+	fmt.Scan(&withdrawAmount)
+	if withdrawAmount <= 0 {
+		fmt.Println("Invalid amount. Please enter a positive number.")
+	} else if withdrawAmount > balance {
+		fmt.Println("Insufficient balance. You can not withdraw more than your current balance.")
+	} else {
+		balance -= withdrawAmount
+		fmt.Printf("Withdrawal successful! New balance: %.2f\n", balance)
+		time.Sleep(2 * time.Second) 
 	}
 }
